@@ -20,14 +20,9 @@ router.get("/batch/:batch_id",async(req,res)=>{
     console.log(batch_id);
     try{
         const allEmployees=await Batch.find({_id:batch_id},{employee_id:1,_id:0});
-        console.log(allEmployees);
         const temp=allEmployees.map(a=>a.employee_id);
-        console.log(allEmployees[0].employee_id);
         const testing=await User.find({"_id":{$in:allEmployees[0].employee_id}},{password:0});
-        console.log(testing+"Hello");
-    // const result=await Batch.find({course_id:course_id});
-    // console.log(result);
-    // return res.json({data:result});
+   
     return res.json({response:"Get Api called for batch"})
     }
     catch(e){
@@ -48,9 +43,6 @@ router.get("/batch/:batch_id",async(req,res)=>{
 
 router.patch("/:batch_id", async (req, res) => {
     batch_id=req.params.batch_id;
-    console.log("Hello"+batch_id);
-    // var updateUser = req.body;
-    // var id = req.params.id;
     const data=req.body;
     console.log(data);
     const result = await Batch.updateOne({ _id: ObjectId(batch_id) }, { $push: { "meets": data } });
@@ -67,22 +59,15 @@ router.get("/trainer/:trainer_id",async(req,res)=>{
         const temp=[]
         const temp1=await allBatches.map(async(b,i)=>{
             const testing=await User.find({"_id":{$in:b.employee_id}},{password:0});
-            console.log("Hello")
-            console.log(testing);
+       
             const obj = Object.assign({}, b);
             obj.employee_data=testing;
             allBatches[i].employee_id=testing;
-            // console.log("test"+i+allBatches[i]);
             temp.push(allBatches[i]);
-            // console.log("Mayur"+obj.employee_id)
             return allBatches[i];
 
         })
         const results = await Promise.all(temp1);
-        // console.log("New");
-        // console.log(results);
-        // console.log("test");
-        // console.log(temp1);
         res.json(results);
     }
     catch(e)
@@ -101,8 +86,6 @@ router.post("/create",async(req,res)=>{
         trainer_id,
         employee_id
     })
-    console.log('fdsdfsddsfsd')
-    console.log(employee_id)
 
 
     // var password = generator.generate({
@@ -117,11 +100,9 @@ router.post("/create",async(req,res)=>{
         uppercase: true,
         numbers: true
     });
-    console.log(passwords);
     // console.log(hash)
     const employees=await User.find({_id:{$in:employee_id}});
 
-    console.log(employees,"getting");
     employees.map(async(e,i)=>{
         const hash = createHmac("sha256", secret).update(passwords[i]).digest("hex");
         const res1=await User.updateOne({ _id: e._id  }, { $set: {password:hash} });
@@ -146,7 +127,6 @@ router.post("/create",async(req,res)=>{
 
 
 router.get("/sendmail",async(req, res) =>{
-    console.log("tempppp")
     mailsender();
     res.send({message:"Bug Solved"});
 })

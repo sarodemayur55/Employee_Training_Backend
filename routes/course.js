@@ -6,7 +6,6 @@ var Course = require("../models/Course");
 const auth = require("../middlewares/auth");
 router.post('/create/virtual',async(req,res)=>{
     const {course_name,mode,sessionsinfo,feedback_questions}=req.body;
-    // console.log(mode+sessionsinfo+feedback_questions);
    
     const result = await Course.create({
         course_name,
@@ -53,7 +52,6 @@ router.post('/create/virtual',async(req,res)=>{
 
 router.post('/create/elearning',async(req,res)=>{
     const {course_name,mode,sessionsinfo,feedback_questions}=req.body;
-    // console.log(mode+sessionsinfo+feedback_questions);
    
     const result = await Course.create({
         course_name,
@@ -76,8 +74,6 @@ router.post('/create/elearning',async(req,res)=>{
 
 router.get('/all',auth,async(req,res)=>{
     const AllCourses=await Course.find();
-    // // console.log(AllCourses);
-    // console.log("All Course API Called")
     res.json(AllCourses)
 })
 

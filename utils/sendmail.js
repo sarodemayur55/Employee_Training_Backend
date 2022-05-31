@@ -1,7 +1,6 @@
 const nodemailer=require('nodemailer');
 
 const mailsender=(maillist,subject,body)=>{
-    console.log("Testing");
     const transporter=nodemailer.createTransport({
         service:'hotmail',
         auth:{
@@ -22,7 +21,6 @@ const mailsender=(maillist,subject,body)=>{
             console.log(err);
             return;
         }
-        // console.log(info);
     })
 }
 module.exports=mailsender
