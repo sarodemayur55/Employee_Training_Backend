@@ -10,7 +10,7 @@ const mailsender=require('../utils/sendmail');
 const secret = process.env.PASSWORD_SECRET;
 const { createHmac } = require("crypto");
 var generator = require('generate-password');
-
+var Course = require("../models/Course");
 
 
 router.get("/batch/:batch_id",async(req,res)=>{
@@ -54,8 +54,11 @@ router.get("/trainer/:trainer_id",async(req,res)=>{
     trainer_id=req.params.trainer_id;
     console.log(trainer_id);
     try{
-        const allBatches=await Batch.find({trainer_id},{employee_id:1,batch_name:1,_id:0});
-        console.log(allBatches);
+        const allBatches=await Batch.find({trainer_id},{employee_id:1,batch_name:1,_id:0,course_id:1});
+        // console.log(allBatches);
+        // console.log("Testing Populate")
+        // res.send(allBatches);
+        // return;
         const temp=[]
         const temp1=await allBatches.map(async(b,i)=>{
             const testing=await User.find({"_id":{$in:b.employee_id}},{password:0});

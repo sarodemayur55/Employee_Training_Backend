@@ -21,23 +21,22 @@ router.get('/batchinfo/:id',async(req, res)=>{
 })
 router.get('/allbatches/:id',async(req,res)=>{
     const id=req.params.id;
-    const allbatches = await Batch.find({});
+    try{
+        const allbatches = await Batch.find({});
     const result=[];
     // console.log(allbatches);
    
     allbatches.map(async(e,i)=>{
         if(e.employee_id.indexOf(id)!=-1)
         {  
-            // console.log(e.trainer_id)
-            // const trainer_info=await User.find({_id:ObjectId(e.trainer_id)});
-            // console.log(trainer_info)
-        //     delete e["employee_id"];
-        //   e['trainer_info']=trainer_info;
             result.push(e);
-            // console.log(result);
         }
     })
     res.send({result:result});
+    }
+    catch(e){
+        res.send({error:e})
+    }
 })
 
 

@@ -5,13 +5,19 @@ const batchschema = new mongoose.Schema({
         type:String
     },
     course_id:{
-      type:String
+      // type:String
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "courses",
     },
     trainer_id:{
-        type:String
+        // type:String
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'users'
     },
   employee_id:{
-    type:Array
+    type:Array,
+      // type: mongoose.Schema.Types.ObjectId,
+      // ref:'users'
   },
   meets:{
     type:Array
