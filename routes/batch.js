@@ -54,7 +54,7 @@ router.get("/trainer/:trainer_id",async(req,res)=>{
     trainer_id=req.params.trainer_id;
     console.log(trainer_id);
     try{
-        const allBatches=await Batch.find({trainer_id},{employee_id:1,batch_name:1,_id:0,course_id:1});
+        const allBatches=await Batch.find({trainer_id},{employee_id:1,batch_name:1,course_id:1});
         // console.log(allBatches);
         // console.log("Testing Populate")
         // res.send(allBatches);
@@ -107,8 +107,12 @@ router.post("/create",async(req,res)=>{
     const employees=await User.find({_id:{$in:employee_id}});
 
     employees.map(async(e,i)=>{
+        
         const hash = createHmac("sha256", secret).update(passwords[i]).digest("hex");
-        const res1=await User.updateOne({ _id: e._id  }, { $set: {password:hash} });
+        if(e.password==null)
+        {
+            const res1=await User.updateOne({ _id: e._id  }, { $set: {password:hash} });
+        console.log(passwords[i]);
         var subject='Login Credentials'
         var body=`Greetings From Mayur:
                     Your Login Credentials:
@@ -116,6 +120,8 @@ router.post("/create",async(req,res)=>{
                     password: ${passwords[i]}          
                 `
         mailsender(e.email,subject,body);
+        }
+        
     })
     // const result1 = await User.updateMany({ _id: { $in:employee_id }  }, { $set: {password:hash} });
     if(result)
@@ -128,6 +134,25 @@ router.post("/create",async(req,res)=>{
     }
 })
 
+router.delete("/deletebatch/:batch_id",async(req, res) =>{
+    batch_id=req.params.batch_id;
+    console.log("Delete api called")
+        Batch.deleteOne({_id:batch_id},(err,result) =>{
+            if(err)
+            {
+                res.status(400).send({message:"Error While Deleting The Batch"});
+            }
+            if(result.deletedCount==1)
+            {
+                res.status(200).send({message:"Batch Deleted Successfully"})
+            }
+            else
+            {
+                res.status(400).send({message:"Error While Deleting The Batch"});
+            }
+        })
+    
+})
 
 router.get("/sendmail",async(req, res) =>{
     mailsender();

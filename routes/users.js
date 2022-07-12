@@ -13,6 +13,7 @@ const fs = require('fs');
 const path = require('path');
 const formidable = require('formidable');
 const excelToJson = require('convert-excel-to-json');
+const verifyToken=require("../middlewares/auth")
 router.get("/all/generate-excel-sheet", async (req, res) => {
   // const course_id = req.params.course_id;
   // console.log("Api called");
@@ -31,7 +32,7 @@ router.get("/all/generate-excel-sheet", async (req, res) => {
   
   // return res.json(allusers);
 });
-router.get("/all", async (req, res) => {
+router.get("/all",verifyToken, async (req, res) => {
   // const course_id = req.params.course_id;
   // console.log("Api called");
   const allusers = await User.find({},{password:0,_id:0,role:0,__v:0,profile_image:0},{lean:true});
@@ -162,7 +163,7 @@ router.patch("/update/:id", async (req, res) => {
 
 
 
-router.post("/register/employeedatabyadmin",async(req,res)=>{
+router.post("/register/employeedatabyadmin",verifyToken,async(req,res)=>{
   // console.log("Employee Data By Admin API Called");
   var data=req.body;
   // console.log(data);
@@ -177,7 +178,7 @@ router.post("/register/employeedatabyadmin",async(req,res)=>{
 
 
 
-router.post("/register/employeedatabyadmin/excel",async(req,res)=>{
+router.post("/register/employeedatabyadmin/excel",verifyToken,async(req,res)=>{
   console.log("Employee Data By Admin Excel API Called");
   
   const form = formidable({ keepExtensions: true });
@@ -260,7 +261,7 @@ router.post("/register/employeedatabyadmin/excel",async(req,res)=>{
 
 
 
-router.get('/all/employees',async(req,res)=>{
+router.get('/all/employees',verifyToken,async(req,res)=>{
   // console.log("Api called");
   const allemployees = await User.find({role:"employee"},{password:0,_id:0,role:0,__v:0,profile_image:0});
   // // console.log(allemployees);

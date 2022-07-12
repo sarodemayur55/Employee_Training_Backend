@@ -24,29 +24,6 @@ router.post('/create/virtual',async(req,res)=>{
         return res.json({message:"Server Error"});
     }
 
-
-
-    // const {course_name,mode,ispretest,isposttest,no_of_sessions}=req.body;
-    // // // console.log(mode+ispretest+isposttest+no_of_sessions);
-    // // console.log(mode);
-   
-    // const result = await Course.create({
-    //     course_name,
-    //     mode,
-    //     ispretest,
-    //     isposttest,
-    //     virtual:{
-    //         no_of_sessions:no_of_sessions
-    //     }
-    // })
-    // if(result)
-    // {
-    //     return res.json({message:"Course Designed"});
-    // }
-    // else
-    // {
-    //     return res.json({message:"Server Error"});
-    // }
 })
 
 
@@ -75,6 +52,25 @@ router.post('/create/elearning',async(req,res)=>{
 router.get('/all',auth,async(req,res)=>{
     const AllCourses=await Course.find();
     res.json(AllCourses)
+})
+
+
+router.delete('/delete/:id',async(req, res)=>{
+    const course_id=req.params.id;
+    Course.deleteOne({_id:course_id},(err,result) =>{
+        if(err)
+        {
+            res.status(400).send({message:"Error While Deleting The Course"});
+        }
+        if(result.deletedCount==1)
+        {
+            res.status(200).send({message:"Course Deleted Successfully"})
+        }
+        else
+        {
+            res.status(400).send({message:"Error While Deleting The Course"});
+        }
+    })
 })
 
 module.exports = router;

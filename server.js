@@ -21,6 +21,7 @@ const record=require("./routes/record");
 const batch=require("./routes/batch");
 const employee=require("./routes/employee");
 const test=require("./test");
+const verifyToken=require("./middlewares/auth")
 app.use(cookieParser());
 // app.use(
 //   cors({
@@ -48,24 +49,24 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to server!" });
 });
 
-app.use("/test", test);
+// app.use("/test", test);
 app.use("/user", user);
-app.use("/announcement", announcement);
-app.use("/course", course);
-app.use("/class", Class);
-app.use("/webinar", webinar);
+// app.use("/announcement", announcement);
+app.use("/course",verifyToken, course);
+// app.use("/class", Class);
+// app.use("/webinar", webinar);
 
-app.use("/assignments",assignments);
-app.use("/instructor",instructor);
-app.use('/user_course',user_course);
-app.use('/record',record);
+// app.use("/assignments",assignments);
+// app.use("/instructor",instructor);
+// app.use('/user_course',user_course);
+// app.use('/record',record);
 
-app.use('/userdata',userdata);
+// app.use('/userdata',userdata);
 
 
 
-app.use('/batch',batch); 
-app.use('/employee',employee); 
+app.use('/batch',verifyToken,batch); 
+app.use('/employee',verifyToken,employee); 
 
 
 
