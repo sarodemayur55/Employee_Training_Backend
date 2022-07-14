@@ -265,6 +265,7 @@ router.get('/all/employees',verifyToken,async(req,res)=>{
   // console.log("Api called");
   const allemployees = await User.find({role:"employee"},{password:0,_id:0,role:0,__v:0,profile_image:0});
   // // console.log(allemployees);
+  
   res.json(allemployees)
 })
 

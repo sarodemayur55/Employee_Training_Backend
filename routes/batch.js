@@ -20,8 +20,6 @@ router.get("/batch/:batch_id",async(req,res)=>{
     console.log(batch_id);
     try{
         const allEmployees=await Batch.find({_id:batch_id},{employee_id:1,_id:0});
-        const temp=allEmployees.map(a=>a.employee_id);
-        const testing=await User.find({"_id":{$in:allEmployees[0].employee_id}},{password:0});
    
     return res.json({response:"Get Api called for batch"})
     }
@@ -54,11 +52,8 @@ router.get("/trainer/:trainer_id",async(req,res)=>{
     trainer_id=req.params.trainer_id;
     console.log(trainer_id);
     try{
-        const allBatches=await Batch.find({trainer_id},{employee_id:1,batch_name:1,course_id:1});
-        // console.log(allBatches);
-        // console.log("Testing Populate")
-        // res.send(allBatches);
-        // return;
+        const allBatches=await Batch.find({trainer_id},{employee_id:1,batch_name:1,course_id:1})
+                                    .populate("course_id")
         const temp=[]
         const temp1=await allBatches.map(async(b,i)=>{
             const testing=await User.find({"_id":{$in:b.employee_id}},{password:0});

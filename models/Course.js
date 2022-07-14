@@ -17,7 +17,17 @@ const courseSchema = new mongoose.Schema({
     sessionsinfo:Array
   },
   virtual:{
-    sessionsinfo:Array
+    sessionsinfo:[
+      {
+        session_name:String,
+        completed:{ type: Boolean, default: false},
+        date:{type:Date, default: null},
+        description:{type:String, default:null},
+        mode:{type:String, default:null},
+        link:{type:String, default:null}, 
+        venue:{type:String, default:null}
+      }
+    ]
   },
   feedback_questions:Array
 });

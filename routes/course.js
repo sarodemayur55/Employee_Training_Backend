@@ -6,7 +6,6 @@ var Course = require("../models/Course");
 const auth = require("../middlewares/auth");
 router.post('/create/virtual',async(req,res)=>{
     const {course_name,mode,sessionsinfo,feedback_questions}=req.body;
-   
     const result = await Course.create({
         course_name,
         mode,
@@ -72,5 +71,40 @@ router.delete('/delete/:id',async(req, res)=>{
         }
     })
 })
+
+router.post('/addsession/',async(req, res)=>{
+    // console.log(req.body)
+    const {date,description,mode,link,venue,course_id,index} = req.body;
+    // const course_id=req.body.course_id;
+    // console.log(date,description,mode,link,venue,course_id,index)
+    Course.findOne({_id:course_id},(err,result) =>{
+        if(err)
+        {
+            res.send({message:"Error While Adding Session"});
+            return;
+        }
+        // console.log(result)
+        var temp=result.virtual[index];
+        // console.log(result.virtual.sessionsinfo[index].date);
+        result.virtual.sessionsinfo[index].date=new Date(date);
+        result.virtual.sessionsinfo[index].description=description;
+        result.virtual.sessionsinfo[index].mode=mode;
+        result.virtual.sessionsinfo[index].link=link;
+        result.virtual.sessionsinfo[index].venue=venue;
+        result.virtual.sessionsinfo[index].added=true;
+        // console.log(result.virtual.sessionsinfo[index])
+        result.save(function (error) {
+            if(error) {
+                console.error('ERROR!');
+                res.send({message:"Error While Adding Session"});
+                return;
+
+            }
+        });
+        res.send({message:"Session Added Successfully"});
+            return;
+    })
+})
+
 
 module.exports = router;
