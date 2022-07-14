@@ -21,6 +21,7 @@ const courseSchema = new mongoose.Schema({
       {
         session_name:String,
         completed:{ type: Boolean, default: false},
+        added:{ type: Boolean, default: false},
         date:{type:Date, default: null},
         description:{type:String, default:null},
         mode:{type:String, default:null},
