@@ -14,18 +14,14 @@ var Course = require("../models/Course");
 
 
 router.get("/batch/:batch_id",async(req,res)=>{
-    console.log("tempppp")
 
     batch_id=req.params.batch_id;
-    console.log(batch_id);
     try{
         const allEmployees=await Batch.find({_id:batch_id},{employee_id:1,_id:0});
    
     return res.json({response:"Get Api called for batch"})
     }
     catch(e){
-        console.log("Error Caught");
-        console.log(e);
         res.status(400).json({response:"Invalid Data Error"})
     }
     
@@ -42,7 +38,6 @@ router.get("/batch/:batch_id",async(req,res)=>{
 router.patch("/:batch_id", async (req, res) => {
     batch_id=req.params.batch_id;
     const data=req.body;
-    console.log(data);
     const result = await Batch.updateOne({ _id: ObjectId(batch_id) }, { $push: { "meets": data } });
     res.json({ data: result });
   })
@@ -50,7 +45,6 @@ router.patch("/:batch_id", async (req, res) => {
 router.get("/trainer/:trainer_id",async(req,res)=>{
    
     trainer_id=req.params.trainer_id;
-    console.log(trainer_id);
     try{
         const allBatches=await Batch.find({trainer_id},{employee_id:1,batch_name:1,course_id:1})
                                     .populate("course_id")
@@ -85,20 +79,12 @@ router.post("/create",async(req,res)=>{
         employee_id
     })
 
-
-    // var password = generator.generate({
-    //     length: 10,
-    //     numbers: true
-    // });
-    
-    // 'uEyMTw32v9'
    
     var passwords = generator.generateMultiple(employee_id.length, {
         length: 10,
         uppercase: true,
         numbers: true
     });
-    // console.log(hash)
     const employees=await User.find({_id:{$in:employee_id}});
 
     employees.map(async(e,i)=>{
@@ -107,7 +93,6 @@ router.post("/create",async(req,res)=>{
         if(e.password==null)
         {
             const res1=await User.updateOne({ _id: e._id  }, { $set: {password:hash} });
-        console.log(passwords[i]);
         var subject='Login Credentials'
         var body=`Greetings From Mayur:
                     Your Login Credentials:
@@ -121,6 +106,7 @@ router.post("/create",async(req,res)=>{
     // const result1 = await User.updateMany({ _id: { $in:employee_id }  }, { $set: {password:hash} });
     if(result)
     {
+        
         return res.json({message:"Batch created"});
     }
     else
@@ -131,7 +117,6 @@ router.post("/create",async(req,res)=>{
 
 router.delete("/deletebatch/:batch_id",async(req, res) =>{
     batch_id=req.params.batch_id;
-    console.log("Delete api called")
         Batch.deleteOne({_id:batch_id},(err,result) =>{
             if(err)
             {

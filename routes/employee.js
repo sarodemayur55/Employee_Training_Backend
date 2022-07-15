@@ -6,7 +6,6 @@ var { ObjectId } = require("mongodb");
 var Course = require("../models/Course");
 router.get('/batchinfo/:id',async(req, res)=>{
     const id=req.params.id;
-    // console.log(id)
    try{
         const batch=await Batch.find({_id:ObjectId(id)});
         var courseinfo=await Course.findOne({_id:ObjectId(batch[0].course_id)});
@@ -22,9 +21,8 @@ router.get('/batchinfo/:id',async(req, res)=>{
 router.get('/allbatches/:id',async(req,res)=>{
     const id=req.params.id;
     try{
-        const allbatches = await Batch.find({});
+        const allbatches = await Batch.find({}).populate('course_id');
     const result=[];
-    // console.log(allbatches);
    
     allbatches.map(async(e,i)=>{
         if(e.employee_id.indexOf(id)!=-1)

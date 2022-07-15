@@ -8,15 +8,13 @@ const fs = require('fs');
 
 const moveFile=(fileNames,file)=>{
     fileNames.push(file.newFilename)
-    console.log(file.newFilename)
     let oldPath = file.filepath
     let newPath = path.join(__dirname + "/public/") + file.newFilename;
     let rawData = fs.readFileSync(oldPath);
-    fs.writeFileSync(newPath, rawData,er=>console.log(er))
+    fs.writeFileSync(newPath, rawData,(er)=>{})
 }
 
 router.post('/',async(req,res)=>{
-    console.log('object')
     const form = formidable({ multiples: true, keepExtensions: true });
     let names=[]
     form.parse(req, async (err, fields, files) => {
