@@ -22,9 +22,16 @@ const batch=require("./routes/batch");
 const employee=require("./routes/employee");
 const test=require("./test");
 const verifyToken=require("./middlewares/auth")
-app.use(cors({
-  origin: '*'
-}));
+const whitelist = ['http://localhost:3000', 'http://developer2.com']
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error())
+    }
+  }
+}
 app.use(cookieParser());
 
 app.use("/public",express.static(path.join(__dirname,"public")))
