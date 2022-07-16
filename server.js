@@ -22,20 +22,10 @@ const batch=require("./routes/batch");
 const employee=require("./routes/employee");
 const test=require("./test");
 const verifyToken=require("./middlewares/auth")
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+app.use(cors({
+  origin: '*'
+}));
 app.use(cookieParser());
-const corsConfig = {
-  origin: true,
-  credentials: true,
-};
-
-app.use(cors(corsConfig));
-app.options('*', cors(corsConfig));
-
 
 app.use("/public",express.static(path.join(__dirname,"public")))
 // app.use(cors({origin: 'http://localhost:3000', allowCredentials = "true"}))
