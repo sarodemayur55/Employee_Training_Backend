@@ -31,6 +31,7 @@ const corsOptions = {
       callback(new Error())
     }
   }
+  ,credentials: true
 }
 app.options('*', cors(corsOptions));
 app.use(cookieParser());
