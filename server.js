@@ -32,6 +32,7 @@ const corsOptions = {
     }
   }
 }
+app.options('*', cors(corsOptions));
 app.use(cookieParser());
 
 app.use("/public",express.static(path.join(__dirname,"public")))
