@@ -1,7 +1,11 @@
 {
+  "name":"mayur",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
+  },
+  "engines": {
+    "node":"14.x"
   },
   "dependencies": {
     "convert-excel-to-json": "^1.7.0",
