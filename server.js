@@ -22,11 +22,11 @@ const batch=require("./routes/batch");
 const employee=require("./routes/employee");
 const test=require("./test");
 const verifyToken=require("./middlewares/auth")
-const whitelist = ['http://localhost:3000', 'http://developer2.com','https://ets-gykki4q9r-sarodemayur55.vercel.app/']
+const whitelist = ['http://localhost:3000', 'http://developer2.com','https://ets-gykki4q9r-sarodemayur55.vercel.app']
 app.use(function (req, res, next) {
 
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'https://ets-gykki4q9r-sarodemayur55.vercel.app/');
+  res.setHeader('Access-Control-Allow-Origin', 'https://ets-gykki4q9r-sarodemayur55.vercel.app');
 
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
