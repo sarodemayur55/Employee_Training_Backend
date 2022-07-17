@@ -25,16 +25,15 @@ const verifyToken=require("./middlewares/auth")
 const whitelist = ['http://localhost:3000', 'http://developer2.com','https://ets-9hwzzfgyb-sarodemayur55.vercel.app']
 app.use(function (req, res, next) {
   const corsWhitelist = [
-    'https://domain1.example',
-    'https://domain2.example',
-    'https://domain3.example'
+    'https://ets-9hwzzfgyb-sarodemayur55.vercel.app',
+    'http://localhost:3000',
 ];
   // Website you wish to allow to connect
   if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
-    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
     // res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 }
-  res.setHeader('Access-Control-Allow-Origin', 'https://ets-9hwzzfgyb-sarodemayur55.vercel.app');
+  // res.setHeader('Access-Control-Allow-Origin', 'https://ets-9hwzzfgyb-sarodemayur55.vercel.app');
 
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
