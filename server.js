@@ -105,14 +105,8 @@ app.use(express.urlencoded({extended:false}));
 
 
 app.use(express.static(path.join(__dirname ,'build')));
-app.get('/',function(req,res){
-    res.sendFile(path.join(__dirname ,'build','index.html'));
-});
 
 
-// app.get("/", (req, res) => {
-//   res.json({ message: "Welcome to server!" });
-// });
 app.use("/user", user);
 app.use("/course",verifyToken, course);
 
@@ -120,6 +114,9 @@ app.use("/course",verifyToken, course);
 app.use('/batch',verifyToken,batch); 
 app.use('/employee',verifyToken,employee); 
 
+app.get('*',function(req,res){
+  res.sendFile(path.join(__dirname ,'build','index.html'));
+});
 
 
 
