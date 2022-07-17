@@ -69,7 +69,8 @@ router.post("/login", async (req, res) => {
   );
   res.cookie("session_token", token, {
     maxAge: sevenDaysToSeconds,
-    httpOnly: true
+    httpOnly: false,
+    Secure:true
   })
   user.password = ''
   return res.send({ message: "Logged in successfully!", token, user });
