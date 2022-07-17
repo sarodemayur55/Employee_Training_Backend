@@ -22,11 +22,12 @@ const batch=require("./routes/batch");
 const employee=require("./routes/employee");
 const test=require("./test");
 const verifyToken=require("./middlewares/auth")
-const whitelist = ['http://localhost:3000', 'http://developer2.com','https://ets-9hwzzfgyb-sarodemayur55.vercel.app']
+const whitelist = ['http://localhost:3000', 'http://developer2.com','https://ets-9hwzzfgyb-sarodemayur55.vercel.app','https://ets-1yxl0oqw0-sarodemayur55.vercel.app']
 app.use(function (req, res, next) {
   const corsWhitelist = [
     'https://ets-9hwzzfgyb-sarodemayur55.vercel.app',
     'http://localhost:3000',
+    'https://ets-1yxl0oqw0-sarodemayur55.vercel.app'
 ];
   // Website you wish to allow to connect
   if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
