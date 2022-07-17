@@ -6,14 +6,16 @@ const verifyToken = async (req, res, next) => {
   req.user = {};
   
   let token = req.cookies;
-  // const session_token=token.session_token;
+  const session_token=token.session_token;
+  // console.log(token)
   
-  // try {
-  //   const decoded = jwt.verify(session_token, JWT_SECRET);
-  //   req.user = decoded;
-  // } catch (err) {
-  //   return res.status(401).send("Invalid token!");
-  // }
+  try {
+    const decod3ed = jwt.verify(session_token, JWT_SECRET);
+    req.user = decoded;
+  } catch (err) {
+    return res.status(401).send("Invalid token!");
+  }
+  // console.log("hello")
   return next();
 };
 
