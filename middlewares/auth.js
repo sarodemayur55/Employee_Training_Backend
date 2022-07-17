@@ -10,7 +10,7 @@ const verifyToken = async (req, res, next) => {
   console.log(token)
   
   try {
-    const decod3ed = jwt.verify(session_token, JWT_SECRET);
+    const decoded = jwt.verify(session_token, JWT_SECRET);
     req.user = decoded;
   } catch (err) {
     console.log("errr")
