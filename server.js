@@ -5,23 +5,24 @@ const path = require("path");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 require("./config/database").connect();
-//const { shouldSendSameSiteNone } = require("should-send-same-site-none");
-
-// const webinar = require("./routes/webinar")
 const user = require("./routes/users");
-// const announcement = require("./routes/announcement")
-// const Class = require("./routes/class")
 const course = require("./routes/course");
 const auth = require("./middlewares/auth");
-// const assignments = require("./routes/assignments");
-// const instructor=require("./routes/instructor");
-// const user_course=require("./routes/user_course")
-// const userdata=require("./routes/userdata");
-// const record=require("./routes/record");
 const batch=require("./routes/batch");
 const employee=require("./routes/employee");
 const test=require("./test");
 const verifyToken=require("./middlewares/auth")
+const bcrypt = require("bcryptjs");
+const session = require("express-session");
+const bodyParser = require("body-parser");
+const passport = require("passport");
+const passportLocal = require("passport-local").Strategy;
+
+
+
+
+
+
 const whitelist = ['http://localhost:3000', 'http://developer2.com','https://ets-9hwzzfgyb-sarodemayur55.vercel.app','https://ets-1yxl0oqw0-sarodemayur55.vercel.app','https://ets-sarodemayur55.vercel.app']
 app.use(function (req, res, next) {
   const corsWhitelist = [
@@ -61,17 +62,57 @@ const corsOptions = {
   ,credentials: true
 }
 app.options('*', cors(corsOptions));
-app.use(cookieParser());
+// app.use(cookieParser());
 
-app.use("/public",express.static(path.join(__dirname,"public")))
+
+
+// Implementation for Passport
+// Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: "secretcode",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+app.use(cookieParser("secretcode"));
+app.use(passport.initialize());
+app.use(passport.session());
+require("./config/passportConfig")(passport);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// app.use("/public",express.static(path.join(__dirname,"public")))
 // app.use(cors({origin: 'http://localhost:3000', allowCredentials = "true"}))
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to server!" });
+
+app.use(express.static(path.join(__dirname ,'build')));
+app.get('/',function(req,res){
+    res.sendFile(path.join(__dirname ,'build','index.html'));
 });
+
+
+// app.get("/", (req, res) => {
+//   res.json({ message: "Welcome to server!" });
+// });
 app.use("/user", user);
 app.use("/course",verifyToken, course);
 
@@ -83,7 +124,7 @@ app.use('/employee',verifyToken,employee);
 
 
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`);
 });
