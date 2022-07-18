@@ -118,9 +118,10 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.get("/logout", async (req, res) => {
-  res
-    .clearCookie("session_token")
-    .send({ message: "Logged out successfully!" });
+  res.cookie.set('session_token', {expires: Date.now()}).send({ message: "Logged out successfully!" });
+  // res
+  //   .clearCookie("session_token")
+  //   .send({ message: "Logged out successfully!" });
 });
 
 router.patch("/update/:id", async (req, res) => {
