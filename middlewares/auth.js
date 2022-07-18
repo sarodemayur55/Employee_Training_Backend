@@ -8,7 +8,7 @@ const verifyToken = async (req, res, next) => {
   let token = req.cookies;
   const session_token=token.session_token;
   console.log(token)
-  
+   
   try {
     const decoded = jwt.verify(session_token, JWT_SECRET);
     req.user = decoded;
