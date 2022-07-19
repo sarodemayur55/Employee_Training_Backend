@@ -118,11 +118,11 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.get("/logout", async (req, res) => {
-  res.cookie.set('session_token','', { maxAge: 0,
-    domain: "employee-training-system.vercel.app.somedomain"}).send({ message: "Logged out successfully!" });
-  // res
-  //   .clearCookie("session_token")
-  //   .send({ message: "Logged out successfully!" });
+  // res.cookie.set('session_token','', { maxAge: 0,
+  //   domain: "employee-training-system.vercel.app.somedomain"}).send({ message: "Logged out successfully!" });
+  res
+    .clearCookie("session_token")
+    .send({ message: "Logged out successfully!" });
 });
 
 router.patch("/update/:id", async (req, res) => {
