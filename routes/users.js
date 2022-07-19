@@ -125,7 +125,7 @@ router.get("/logout", async (req, res) => {
     // maxAge: sevenDaysToSeconds,
     httpOnly: false,
     Secure:true,
-    expires: new Date(1)
+    expires: new Date(0)
   }) .send({ message: "Logged out successfully!" });
 
 
