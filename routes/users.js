@@ -70,8 +70,7 @@ router.post("/login", async (req, res) => {
   res.cookie("session_token", token, {
     maxAge: sevenDaysToSeconds,
     httpOnly: false,
-    Secure:true,
-    domain:'employee-training-system.vercel.app'
+    Secure:true
   })
   user.password = ''
   return res.send({ message: "Logged in successfully!", token, user });
@@ -127,8 +126,7 @@ router.get("/logout", async (req, res) => {
     httpOnly: false,
     Secure:true,
     expires: new Date.Now(),
-    overwrite: true,
-    domain:'employee-training-system.vercel.app'
+    overwrite: true
   }) .send({ message: "Logged out successfully!" });
 
 
