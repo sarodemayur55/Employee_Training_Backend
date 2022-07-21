@@ -47,6 +47,7 @@ router.post("/login", async (req, res) => {
       .status(404)
       .json({ message: "User Not Found. Check Your Email ID!" });
   const hash = createHmac("sha256", secret).update(password).digest("hex");
+  console.log(hash);
   if (user.password !== hash) {
     return res.status(400).json({ message: "Incorrect email or password!" });
   }
