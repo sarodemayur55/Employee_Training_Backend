@@ -17,7 +17,7 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const passportLocal = require("passport-local").Strategy;
-
+const { access_key_id,secret_access_key } = process.env;
 
 
 
@@ -113,7 +113,12 @@ app.use("/course",verifyToken, course);
 
 app.use('/batch',verifyToken,batch); 
 app.use('/employee',verifyToken,employee); 
-
+app.get('/getawscreds',async(req,res) => {
+  var data={access_key_id,
+    secret_access_key}
+  
+  res.send(data);
+})
 app.get('*',function(req,res){
   res.sendFile(path.join(__dirname ,'build','index.html'));
 });
